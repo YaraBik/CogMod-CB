@@ -5,9 +5,8 @@
 ;(sgp :v nil :esc t :lf .6 :bll 0.5 :ans 0.4 :rt 1.1 :ncnar nil)
 ​
 ​(chunk-type move claim strategy my-move
-(chunk-type move type strategy mns bid-diff op-move my-move)
-(chunk-type game-state type-move my-mns op-mns my-bid-diff op-bid-diff op-move my-move op-final)
-(chunk-type game-end )
+(chunk-type move type strategy op-mns mns op-bid-diff bid-diff op-move my-move)
+(chunk-type game-state state type-move my-mns op-mns my-bid-diff op-bid-diff op-move my-move op-final strategy-op)
 (chunk-type goal state strategy my-mns)
 ​
 (add-dm
@@ -53,6 +52,9 @@
  (final-offer) (quit))
 ​
 ; TODO: is the MNS of the player visible to the model before making the claim?
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; report mns value to model and start claim round
 (P start-game
    =goal>
       ISA         goal
@@ -60,6 +62,7 @@
 	strategy	=s
    =action>
 	ISA		game-state
+	state		game
 	my-mns	=m-mns
 ==>
    =goal>
@@ -73,6 +76,7 @@
 )
 
 ; note: partial matching allowed for claims (no claim for neutral but that can change)
+; declare mns
 (P make-claim
    =goal>
 	ISA		goal
@@ -90,6 +94,8 @@
 	my-move	=move
 )​
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; depending on game stage, retrieve an action (opening, bid, final-offer, quit, decision) 
 
 (P start-opening
    =goal>
@@ -99,6 +105,7 @@
 	my-mns	=m-mns
    =action>
 	ISA		game-state
+	state		game
 	my-bid-diff	nil
 	op-move	=o-move
 ==>
@@ -118,6 +125,7 @@
 	strategy	=s
    =action>
 	ISA		game-state
+	state		game
 	my-bid-diff	=m-diff
 	op-move	=o-move
 	op-final	no
@@ -139,6 +147,7 @@
 	strategy	=s
    =action>
 	ISA		game-state
+	state		game
 	my-bid-diff	=m-diff
 	op-move	=o-move
 	op-final	yes
@@ -152,6 +161,8 @@
    -action>	
 )
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; report move to ModelView
 (P make-move
    =goal>
 	ISA		goal
@@ -169,12 +180,15 @@
 	state		update
 )
 
-(P get-strategy
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; identify strategy of oponent by pretending that model is oponent
+(P get-op-strategy
    =goal>
 	ISA		goal
 	state		update
    =action>
 	ISA		game-state
+	state		game
 	op-mns	=o-mns
 	op-bid-diff	=o-bid-diff
 	op-move	=o-move
@@ -190,7 +204,8 @@
 	my-move	=o-move
 )
 
-(P update-strategy
+; update strategy of model based on proposed strategy of player (simplified version for now)
+(P update-my-strategy
    =goal>
 	ISA		goal
 	state		update
@@ -202,6 +217,44 @@
 	state		bid
 	strategy	=s
 )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; ModelView reports good moves back to model at the end of the negotiation
+; take info from action buffer and create chunk in imaginal buffer of desired format
+(P process-good-game
+   =action>
+	ISA		game-state
+	state		feedback
+	type-move	=t
+	my-mns	=m-mns
+	op-mns	=o-mns
+	my-bid-diff	=m-bid-diff
+	op-bid-diff	=o-bid-diff
+	op-move	=o-move
+	my-move	=m-move
+	strategy-op	=s
+   ?imaginal>
+	state free
+==>
+   +imaginal>
+	ISA		move
+	type		=t
+	mns		=m-mns
+	op-mns	=o-mns
+	bid-diff	=m-bid-diff
+	op-bid-diff	=o-bid-diff
+	op-move	=o-move
+	my-move	=m-move
+)
+
+; every time there is a chunk in the imaginal buffer (namely after feedback was provided)
+; clear the chunk such that it enters declarative memory
+(P clear-new-imaginal-chunk
+   ?imaginal>
+	state		free
+	buffer	full
+==>
+   -imaginal>)
 
 
 (set-all-base-levels 100000 -1000)
