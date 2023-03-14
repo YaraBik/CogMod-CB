@@ -8,13 +8,13 @@
 import SwiftUI
 
 
-struct GameView_Previews: PreviewProvider {
+struct MNS_Previews: PreviewProvider {
     static var previews: some View {
-        GameView()
+        MNSView()
     }
 }
 
-struct GameView: View {
+struct MNSView: View {
     var body: some View {
         VStack {
             // clock
@@ -38,7 +38,7 @@ struct GameView: View {
                 .padding(10)
 
                 // text field
-                TextField("Exchange MNS", text: /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Value@*/.constant("")/*@END_MENU_TOKEN@*/)
+                TextField("History of bids", text: /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Value@*/.constant("")/*@END_MENU_TOKEN@*/)
             }
             
             // Choose MNS view
@@ -52,21 +52,14 @@ struct GameView: View {
                 Button("7") { /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Action@*/ /*@END_MENU_TOKEN@*/ }
                 Button("8") { /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Action@*/ /*@END_MENU_TOKEN@*/ }
                 Button("9") { /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Action@*/ /*@END_MENU_TOKEN@*/ }
-                //            Toggle("This is my final offer", isOn: $finalOffer)
-                Button("This is my final offer") {
-                    /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Action@*/ /*@END_MENU_TOKEN@*/
-                }.foregroundColor(.black)
             }
             
             // Buttons
             HStack {
-                Button("Submit Offer") {
+                Button("Submit MNS") {
                     /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Action@*/ /*@END_MENU_TOKEN@*/
                 }
-                Button("Accept Offer") {
-                    /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Action@*/ /*@END_MENU_TOKEN@*/
-                }
-                Button("Quit Round") {
+                Button("Quit Game") {
                     /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Action@*/ /*@END_MENU_TOKEN@*/
                 }
                 .foregroundColor(.red)
