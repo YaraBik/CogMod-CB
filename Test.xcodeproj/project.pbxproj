@@ -7,13 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0529FBDE29C0A26F002E4755 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0529FBDD29C0A26F002E4755 /* ContentView.swift */; };
+		0529FBE029C0A370002E4755 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0529FBDF29C0A370002E4755 /* HomeView.swift */; };
+		0529FBE229C0A73E002E4755 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0529FBE129C0A73E002E4755 /* GameView.swift */; };
 		23FA4ACF29B22210005C57F1 /* TestApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23FA4ACE29B22210005C57F1 /* TestApp.swift */; };
 		23FA4AD329B22212005C57F1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 23FA4AD229B22212005C57F1 /* Assets.xcassets */; };
 		23FA4AD629B22212005C57F1 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 23FA4AD529B22212005C57F1 /* Preview Assets.xcassets */; };
 		23FA4AE029B22213005C57F1 /* TestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23FA4ADF29B22213005C57F1 /* TestTests.swift */; };
 		23FA4AEA29B22213005C57F1 /* TestUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23FA4AE929B22213005C57F1 /* TestUITests.swift */; };
 		23FA4AEC29B22213005C57F1 /* TestUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23FA4AEB29B22213005C57F1 /* TestUITestsLaunchTests.swift */; };
-		23FA4AFB29B226AE005C57F1 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23FA4AFA29B226AE005C57F1 /* ContentView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,6 +36,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0529FBDD29C0A26F002E4755 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		0529FBDF29C0A370002E4755 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		0529FBE129C0A73E002E4755 /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
 		23FA4ACB29B22210005C57F1 /* Test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Test.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		23FA4ACE29B22210005C57F1 /* TestApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestApp.swift; sourceTree = "<group>"; };
 		23FA4AD229B22212005C57F1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -43,7 +48,6 @@
 		23FA4AE529B22213005C57F1 /* TestUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TestUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		23FA4AE929B22213005C57F1 /* TestUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestUITests.swift; sourceTree = "<group>"; };
 		23FA4AEB29B22213005C57F1 /* TestUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		23FA4AFA29B226AE005C57F1 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,7 +98,9 @@
 		23FA4ACD29B22210005C57F1 /* Test */ = {
 			isa = PBXGroup;
 			children = (
-				23FA4AFA29B226AE005C57F1 /* ContentView.swift */,
+				0529FBDF29C0A370002E4755 /* HomeView.swift */,
+				0529FBE129C0A73E002E4755 /* GameView.swift */,
+				0529FBDD29C0A26F002E4755 /* ContentView.swift */,
 				23FA4ACE29B22210005C57F1 /* TestApp.swift */,
 				23FA4AD229B22212005C57F1 /* Assets.xcassets */,
 				23FA4AD429B22212005C57F1 /* Preview Content */,
@@ -257,7 +263,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				23FA4AFB29B226AE005C57F1 /* ContentView.swift in Sources */,
+				0529FBE029C0A370002E4755 /* HomeView.swift in Sources */,
+				0529FBDE29C0A26F002E4755 /* ContentView.swift in Sources */,
+				0529FBE229C0A73E002E4755 /* GameView.swift in Sources */,
 				23FA4ACF29B22210005C57F1 /* TestApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
