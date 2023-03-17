@@ -15,6 +15,7 @@ struct ContentView_Previews: PreviewProvider {
 }
 
 struct ContentView: View {
+    @State var finalOffer: Bool = false
     var body: some View {
         VStack {
             // Clock
@@ -78,7 +79,18 @@ struct ContentView: View {
                             .frame(width: 20.0, height: 20.0)
                     }
                     // TODO: add toggle for final offer
-                    Button("This is my final offer") { /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Action@*/ /*@END_MENU_TOKEN@*/ }
+                    let fo = Button(action: {
+                        withAnimation {
+                            self.finalOffer.toggle()
+                        }
+                    }) {
+                        Text("This is my final offer")
+                    }
+                    if (finalOffer) {
+                        fo.foregroundColor(.red)
+                    } else {
+                        fo
+                    }
                 }
             }
             .padding()

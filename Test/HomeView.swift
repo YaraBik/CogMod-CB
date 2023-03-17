@@ -18,9 +18,10 @@ struct HomeView: View {
     var body: some View {
         VStack {
             Text("The Game of Nine")
-            Button("?") {
-                /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Action@*/ /*@END_MENU_TOKEN@*/
-            }
+            // How to play game stuff?
+//            Button("?") {
+//                /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Action@*/ /*@END_MENU_TOKEN@*/
+//            }
             //Picture
             Button("Play a Game") {
                 /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Action@*/ /*@END_MENU_TOKEN@*/
