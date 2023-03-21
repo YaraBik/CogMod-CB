@@ -14,7 +14,7 @@ struct TestApp: App {
             MainView()
 //            HomeView()
 //            MNSView()
-//            ContentView()
+//            GameView()
         }
     }
 }
