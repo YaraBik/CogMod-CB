@@ -14,9 +14,9 @@ struct MainView: View {
                 .tabItem {
                     Label("Home", systemImage: "house")
                 }
-            MNSView()
+            StatisticsView()
                 .tabItem {
-                    Label("Game", systemImage: "doc")
+                    Label("Statistics", systemImage: "doc")
                 }
         }
     }
