@@ -32,14 +32,13 @@ struct HomeView: View {
                 reqView = 1
             }
             
-            Button("Reset Model") {
+            Button("Reset Model") { // TODO: ask confirmation
                 /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Action@*/ /*@END_MENU_TOKEN@*/
             }
             .foregroundColor(.red)
-            
-            Button("Statistics") {
-                /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Action@*/ /*@END_MENU_TOKEN@*/
-            }
+//            .confirmationDialog(/*@START_MENU_TOKEN@*//*@PLACEHOLDER=titleKey: LocalizedStringKey@*/LocalizedStringKey/*@END_MENU_TOKEN@*/, isPresented: /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Binding<Bool>@*/Binding<Bool>/*@END_MENU_TOKEN@*/) {
+//                /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Code@*/ /*@END_MENU_TOKEN@*/
+//            }
         }
     }
 }

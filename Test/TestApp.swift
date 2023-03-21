@@ -11,10 +11,12 @@ import SwiftUI
 struct TestApp: App {
     var body: some Scene {
         WindowGroup {
-            MainView()
+//            MainView() // TODO: make sure that home view isn't duplicated when start game
 //            HomeView()
 //            MNSView()
 //            GameView()
+            FeedbackView()
+//            StatisticsView()
         }
     }
 }
