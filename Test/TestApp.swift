@@ -7,16 +7,18 @@
 
 import SwiftUI
 
+// TODO: images for app (homescreen, model)
+
 @main
 struct TestApp: App {
     var body: some Scene {
         WindowGroup {
-//            MainView() // TODO: make sure that home view isn't duplicated when start game
+            MainView()
 //            HomeView()
-//            MNSView()
-//            GameView()
-            FeedbackView()
-//            StatisticsView()
+//            MNSView() // Mainly done
+//            GameView() // Mainly done (look at final offer toggle)
+//            FeedbackView() //DONE
+//            StatisticsView() //DONE? (maybe look at graph?)
         }
     }
 }

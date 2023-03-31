@@ -48,7 +48,8 @@ struct StatisticsView: View {
             .padding(.all, 40)
             
             // Strategy graph
-            Text("Expected strategy over time")
+            Text("Expected strategy over time").font(.title)
+            Text("According to last 10 games.").font(.footnote)
             StrategyChart(measurements: $strategies)
                 .padding(.horizontal)
             
@@ -102,6 +103,7 @@ func stratPercByGame(_ measurement: [String]) -> [StratPerc] {
     var aggr: Double = 0.0
     var perc: [StratPerc] = []
     var min_i: Int = 0
+    
     for i in (0..<measurement.count) {
         coop = 0
         aggr = 0
