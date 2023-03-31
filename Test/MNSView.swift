@@ -15,6 +15,11 @@ struct MNS_Previews: PreviewProvider {
 }
 
 struct MNSView: View {
+    // TODO: get these variables
+    @State var playerMNS: Int = 4
+    @State var playerScore: Int = 0
+    @State var modelScore: Int = 0
+    @State var playerAction: Int = 0
     var body: some View {
         VStack {
             // Clock
@@ -33,7 +38,7 @@ struct MNSView: View {
                     VStack {
                         Text("🤖")
                             .font(.largeTitle)
-                        Text("Model score: 0") // TODO: add score value here
+                        Text("Model score: " + String(modelScore)) // TODO: add score value here
                         Text("Model MNS: ?")
                     }
                 }
@@ -57,29 +62,20 @@ struct MNSView: View {
                     .stroke(lineWidth: 3)
                 VStack {
                     Text("My MNS is:")
-                    HStack {  // TODO: add selection actions
-                        Button("1") { /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Action@*/ /*@END_MENU_TOKEN@*/ }
-                            .frame(width: 20.0, height: 20.0)
-                        Button("2") { /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Action@*/ /*@END_MENU_TOKEN@*/ }
-                            .frame(width: 20.0, height: 20.0)
-                        Button("3") { /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Action@*/ /*@END_MENU_TOKEN@*/ }
-                            .frame(width: 20.0, height: 20.0)
-                        Button("4") { /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Action@*/ /*@END_MENU_TOKEN@*/ }
-                            .frame(width: 20.0, height: 20.0)
-                        Button("5") { /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Action@*/ /*@END_MENU_TOKEN@*/ }
-                            .frame(width: 20.0, height: 20.0)
-                        Button("6") { /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Action@*/ /*@END_MENU_TOKEN@*/ }
-                            .frame(width: 20.0, height: 20.0)
-                        Button("7") { /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Action@*/ /*@END_MENU_TOKEN@*/ }
-                            .frame(width: 20.0, height: 20.0)
-                        Button("8") { /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Action@*/ /*@END_MENU_TOKEN@*/ }
-                            .frame(width: 20.0, height: 20.0)
-                        Button("9") { /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Action@*/ /*@END_MENU_TOKEN@*/ }
-                            .frame(width: 20.0, height: 20.0)
+                    HStack {  // TODO: get clicked MNS value from variable "playerAction"
+                        MNSButtonView(playerMNS: $playerMNS, buttonNr: 1, playerAction: $playerAction)
+                        MNSButtonView(playerMNS: $playerMNS, buttonNr: 2, playerAction: $playerAction)
+                        MNSButtonView(playerMNS: $playerMNS, buttonNr: 3, playerAction: $playerAction)
+                        MNSButtonView(playerMNS: $playerMNS, buttonNr: 4, playerAction: $playerAction)
+                        MNSButtonView(playerMNS: $playerMNS, buttonNr: 5, playerAction: $playerAction)
+                        MNSButtonView(playerMNS: $playerMNS, buttonNr: 6, playerAction: $playerAction)
+                        MNSButtonView(playerMNS: $playerMNS, buttonNr: 7, playerAction: $playerAction)
+                        MNSButtonView(playerMNS: $playerMNS, buttonNr: 8, playerAction: $playerAction)
+                        MNSButtonView(playerMNS: $playerMNS, buttonNr: 9, playerAction: $playerAction)
                     }
                 }
             }
-            .padding()
+            .padding(.vertical)
             
             // Buttons
             HStack {  // TODO: add actions
@@ -87,6 +83,7 @@ struct MNSView: View {
                     /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Action@*/ /*@END_MENU_TOKEN@*/
                 }
                 .padding()
+                // TODO: maybe make smaller, so harder to accidentally touch?
                 Button("Quit Game") {
                     /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Action@*/ /*@END_MENU_TOKEN@*/
                 }
@@ -97,13 +94,57 @@ struct MNSView: View {
 
             // Scores
             HStack { // TODO: add in these values
-                Text("MNS Value: " + "x")
+                Text("MNS Value: " + String(playerMNS))
                     .padding([.bottom, .trailing], 30.0)
-                Text("Score: " + "x")
+                Text("Score: " + String(playerScore))
                     .padding([.leading, .bottom], 30.0)
             }
             .padding()
         }
         .padding()
+    }
+}
+
+
+struct MNSButtonView: View {
+    @Binding var playerMNS: Int
+    @State var buttonNr: Int
+    @Binding var playerAction: Int
+    var body: some View {
+//        let _ = print(playerAction, buttonNr)
+        if (buttonNr < playerMNS) {
+            ZStack {
+                if (playerAction == buttonNr) {
+                    Circle()
+                        .strokeBorder(.pink, lineWidth: 2)
+                        .background(Circle().foregroundColor(Color(red:1.0, green:0.84, blue:0.46)))
+                        .frame(width: 27.0, height: 27.0)
+                } else {
+                    Circle()
+                        .strokeBorder(.pink, lineWidth: 2)
+                        .background(Circle().foregroundColor(.white))
+                        .frame(width: 27.0, height: 27.0)
+                }
+                Button(String(buttonNr)) { playerAction = buttonNr }
+                    .frame(width: 20.0, height: 20.0)
+                    .foregroundColor(.pink)
+            }
+        } else {
+            ZStack {
+                if (playerAction == buttonNr) {
+                    Circle()
+                        .strokeBorder(.black, lineWidth: 2)
+                        .background(Circle().foregroundColor(Color(red:0.4627, green:0.8392, blue:1.0)))
+                        .frame(width: 27.0, height: 27.0)
+                } else {
+                    Circle()
+                        .strokeBorder(.black, lineWidth: 2)
+                        .background(Circle().foregroundColor(.white))
+                        .frame(width: 27.0, height: 27.0)
+                }
+                Button(String(buttonNr)) { playerAction = buttonNr }
+                    .frame(width: 20.0, height: 20.0)
+            }
+        }
     }
 }

@@ -41,7 +41,7 @@
 /* Begin PBXFileReference section */
 		0529FBDD29C0A26F002E4755 /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
 		0529FBDF29C0A370002E4755 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
-		0529FBE129C0A73E002E4755 /* MNSView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MNSView.swift; sourceTree = "<group>"; };
+		0529FBE129C0A73E002E4755 /* MNSView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MNSView.swift; sourceTree = "<group>"; tabWidth = 4; };
 		0539AA3929C48B9B00730A49 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		058338B729C9D7A300F02204 /* StatisticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsView.swift; sourceTree = "<group>"; };
 		058338B929C9D88F00F02204 /* FeedbackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackView.swift; sourceTree = "<group>"; };
