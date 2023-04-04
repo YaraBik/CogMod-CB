@@ -206,11 +206,13 @@ class Declarative: Codable  {
                     }
                 } else { continue chunkloop }
             }
+            print("Candidate: \(ch1) with activation \(ch1.activation()) + and + \(mismatch)\n")
             if ch1.activation()  + mismatch > bestActivation {
                 bestActivation = ch1.activation() + mismatch
                 bestMatch = ch1
             }
         }
+        
         if bestActivation > retrievalThreshold {
             return (latency(activation: bestActivation) , bestMatch)
         } else {

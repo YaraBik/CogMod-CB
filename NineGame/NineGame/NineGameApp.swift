@@ -1,6 +1,6 @@
 import SwiftUI
 
-@main
+ @main
 struct TestApp: App {
     var modelView = NineViewModel()
     

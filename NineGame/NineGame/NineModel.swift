@@ -1,15 +1,10 @@
 import Foundation
 
 
-func last_x_elements(suffix x: Int, array a: Array<Int>) -> Array<Int>{
-    var a = a
-    a.reverse()
-    return Array(a[...x])
-}
 struct NineModel {
-
+    var mnsPairs: Array<Array<Int>> = [[1,1], [2,2], [3,3], [4,4], [1,3], [3,1], [1,5], [5,1], [2,6], [6,2], [4,5], [5,4]]
     var model = Model()
-    var playerBid: Int = 0
+    var modelFinal: Bool = false
     var playerMNS: Int = 0
     var modelMNS: Int = 0
     var gamesWonPlayer = 0
@@ -60,10 +55,18 @@ struct NineModel {
     }
     
     mutating func resetModelTrial(){
+        roundModelInfo = ["strategy": [],
+                          "bids" : [],
+                          "type" : []]
+        roundPlayerInfo = ["strategy": [],
+                           "bids" : [],
+                           "type" : []]
         self.bidString = ""
         roundPlayerBids = [0]
         roundModelBids = [0]
+        modelFinal = false
         self.setMNS()
+        
         
         let chunk = model.generateNewChunk()
         chunk.setSlot(slot: "isa", value: "game-state")
@@ -77,8 +80,10 @@ struct NineModel {
         //print(model.dm.chunks)
         
         if (modelAction != nil) {
+            self.roundModelInfo["type"]!.append("claim")
+            self.roundModelInfo["strategy"]!.append(model.lastAction(slot: "strategy")!)
+            self.roundModelInfo["bids"]!.append(modelAction!.description)
             self.suggestedModelMNS = Double(self.modelMNS) + (Double(modelAction!.description) ?? 0)
-            //updateStrategy(Double(suggestedPlayerMNS), self.modelMNS))
         }
         else {
             print("No action returned.")
@@ -88,11 +93,14 @@ struct NineModel {
 
     mutating func chooseMNS(_ mns: Int) {
         print("You selected an MNS of: \(mns)")
+        self.roundPlayerInfo["type"]!.append("claim")
+        self.roundPlayerInfo["bids"]!.append(String(mns - playerMNS))
         self.suggestedPlayerMNS = Double(mns)
     }
     
     mutating func chooseBid(_ bid: Int, final f: Bool) -> Int{
         //:')
+        let numbers: Set<Character> = ["1","2","3","4","5","6","7","8","9","0"]
         let chunk = model.generateNewChunk()
         let isa = "game-state"
         let state = "game"
@@ -100,17 +108,16 @@ struct NineModel {
         let opMove: Value?
         let myBidDiff = (roundModelBids.count == 1) ? Value.Empty : Value.Number(Double(abs(self.roundModelBids.last! - modelMNS)))
         
-        
         if (roundModelBids.count == 1)
         {
+            self.roundModelInfo["type"]!.append("opening")
+            self.roundPlayerInfo["type"]!.append("opening")
             opMove = Value.Number(Double(bid - roundPlayerBids.last!))
         }
         else{
             let lastTwoBids = Array(self.roundPlayerBids.suffix(2))
             opMove = Value.Number(Double(lastTwoBids[1] - lastTwoBids[0]))
         }
-        //myBidDiff = Value.Number(Double(abs(self.roundModelBids.last! - modelMNS)))
-        
         
         chunk.setSlot(slot: "isa", value: isa)
         chunk.setSlot(slot: "state", value: state)
@@ -122,22 +129,38 @@ struct NineModel {
         model.run()
         
         let modelAction = model.lastAction(slot: "my-move")
-        //let strategy = model.lastAction(slot: "strategy")
+        var bidName = model.buffers["partial"]!.name
+        bidName.removeAll(where: {numbers.contains($0)})
         
         if (modelAction != nil) {
+            self.roundModelInfo["strategy"]!.append(model.lastAction(slot: "strategy")!)
+            self.roundModelInfo["bids"]!.append(model.lastAction(slot: "my-move")!)
+            if bidName.contains("final-offer") {
+                self.roundPlayerInfo["type"]!.append("decision")
+                let response = Int(Double(modelAction!.description) ?? 0)
+                let modelBid = response + self.roundModelBids.last!
+                self.roundModelBids.append(modelBid)
+                self.roundPlayerBids.append(bid)
+                return 3
+            }
+            
+            self.roundPlayerInfo["bids"]!.append(String(bid - roundPlayerBids.last!))
             if (modelAction!.description == "reject")
             {
+                self.roundModelInfo["type"]!.append("decision")
                 print("I reject, come up with something better :')")
                 return 2
             }
             if (modelAction!.description == "accept")
             {
                 print("I accept your offer!")
+                self.roundModelInfo["type"]!.append("decision")
                 self.roundPlayerBids.append(bid)
                 return 1
             }
             if (modelAction!.description == "quit")
             {
+                self.roundModelInfo["type"]!.append("quit")
                 print("I quit!")
                 return 2
             }
@@ -152,6 +175,8 @@ struct NineModel {
                     self.roundPlayerBids.append(bid)
                     return 1
                 }
+                self.roundModelInfo["type"]!.append("bid")
+                self.roundPlayerInfo["type"]!.append("bid")
                 updateStrategy(bid, modelBid)
                 
                 self.roundModelBids.append(modelBid)
@@ -166,13 +191,6 @@ struct NineModel {
     
     mutating func updateStrategy(_ playerBid: Int, _ modelBid: Int){
         let chunk = model.generateNewChunk()
-        
-        print("update strategy:\n")
-        print(suggestedPlayerMNS)
-        print(Double(abs(playerBid - Int(suggestedPlayerMNS))))
-        print(Double(playerBid - self.roundPlayerBids.last!))
-        print(Double(modelBid - self.roundModelBids.last!))
-        
 
         chunk.setSlot(slot: "isa", value: "game-state")
         chunk.setSlot(slot: "state", value: "game")
@@ -181,14 +199,15 @@ struct NineModel {
         chunk.setSlot(slot: "op-move", value: Double(playerBid - self.roundPlayerBids.last!))
         chunk.setSlot(slot: "my-move", value: Double(modelBid - self.roundModelBids.last!))
         
-        print(chunk)
+        //print(chunk)
         model.buffers["action"] = chunk
         model.run()
+        
     }
-    
     mutating func setMNS(){
-        self.playerMNS = Int.random(in: 1...5)
-        self.modelMNS = Int.random(in: 1...5)
+        let pair = mnsPairs[Int.random(in: 0...11)]
+        self.playerMNS = pair[0]
+        self.modelMNS = pair[1]
     }
 
 }

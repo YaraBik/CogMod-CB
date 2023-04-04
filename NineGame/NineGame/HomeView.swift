@@ -23,6 +23,8 @@ struct HomeView: View {
 //            }
             //Picture
             Button("Play a Game") {
+                //model.switchState(1)
+                //print(model.state)
                 reqView = 1
             }
             

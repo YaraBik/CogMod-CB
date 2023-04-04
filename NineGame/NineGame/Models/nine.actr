@@ -5,7 +5,7 @@
  (strategy2 isa strategy type agg)
  
  
- (claim1 isa claim strategy coop my-move 0)
+ (claim1 isa move type claim strategy coop mns nil bid-diff nil op-move nil my-move 0)
  (bid1 isa move type bid strategy coop mns nil bid-diff 3 op-move -2 my-move -2)
  (bid2 isa move type bid strategy coop mns nil bid-diff 2 op-move -2 my-move -2)
  (bid3 isa move type bid strategy coop mns nil bid-diff 2 op-move -1 my-move -1)
@@ -18,7 +18,7 @@
  (opening2 isa move type opening strategy coop mns 4 bid-diff nil op-move 6 my-move 6)
  (opening3 isa move type opening strategy coop mns 1 bid-diff nil op-move 5 my-move 5)
  (opening4 isa move type opening strategy coop mns 4 bid-diff nil op-move 8 my-move 7)
- (claim2 isa claim strategy agg my-move 1)
+ (claim2 isa move type claim strategy agg mns nil bid-diff nil op-move nil my-move 1)
  (bid7 isa move type bid strategy agg mns nil bid-diff 3 op-move 1 my-move 0)
  (bid8 isa move type bid strategy agg mns nil bid-diff 2 op-move 1 my-move 0)
  (decision3 isa move type decision strategy agg mns nil bid-diff 1 op-move -1 my-move reject)
@@ -56,10 +56,11 @@
     my-mns    =m-mns
 ==>
    =goal>
-      state       claim
+    state       claim
     my-mns    =m-mns
    +partial>
-    isa        claim
+    isa        move
+    type        claim
     strategy   =s
    -action>
 )
@@ -71,7 +72,8 @@
     isa        goal
     state      claim
    =partial>
-    isa        claim
+    isa        move
+    type        claim
     my-move    =move
     strategy     =s
 ==>
@@ -112,6 +114,7 @@
     isa        goal
     state        bid
     strategy    =s
+    my-mns      =mns
    =action>
     isa          game-state
     state        game
@@ -123,6 +126,7 @@
     isa        move
     strategy    =s
     type        bid
+    mns         =mns
     bid-diff    =m-diff
     op-move    =o-move
    -action>
@@ -133,6 +137,7 @@
     isa        goal
     state        bid
     strategy    =s
+    my-mns      =mns
    =action>
     isa        game-state
     state        game
@@ -144,6 +149,7 @@
     isa        move
     type        decision
     strategy    =s
+    mns         =mns
     bid-diff    =m-diff
     op-move    =o-move
    -action>
@@ -158,14 +164,17 @@
    =partial>
     isa        move
     type        =t
+    strategy   =s
     my-move    =m-move
 ==>
    +action>
     isa        game-state
     type        =t
     my-move    =m-move
+    strategy   =s
    =goal>
     state        find-strategy
+   =partial>
 )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -253,7 +262,7 @@
    ?imaginal>
     state        free
 ==>
-   +retrieval?
+   +retrieval>
     isa        strategy
    =goal>
     isa        goal
@@ -295,7 +304,8 @@
    +imaginal>
     isa        move
     type        =t
-    mns        =m-mns
+    strategy    =s
+    mns        =mns
     bid-diff    =bid-diff
     op-move    =o-move
     my-move    =m-move
@@ -303,7 +313,6 @@
     isa         goal
     state       start
   -action>
-    
 )
 
 (p reset-game

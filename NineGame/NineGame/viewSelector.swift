@@ -5,13 +5,13 @@ struct viewSelector: View{
     @ObservedObject var model: NineViewModel
     
     var body: some View {
-        if (showingGame == 0) {
+        if (model.state == 0) {
             HomeView(model: model)
         }
-        if (showingGame == 1) {
+        if (model.state == 1) {
             MNSView(model: model)
         }
-        if (showingGame == 2) {
+        if (model.state == 2) {
             GameView(model: model)
         }
     }

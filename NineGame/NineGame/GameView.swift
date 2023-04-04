@@ -100,27 +100,39 @@ struct GameView: View {
             VStack {  // TODO: add actions
                 HStack {
                     Button("Submit Offer") {
-                        if (model.playerBid != nil)
-                        {
-                            model.chooseBid(model.playerBid!, finalOffer)
-                            if (model.flag == 1 || model.flag == 2){
-                                GameViewSwitch = 1
+                        if (model.model.modelFinal == false) {
+                            if (model.playerBid != nil)
+                            {
+                                model.chooseBid(model.playerBid!, finalOffer)
+                                if (model.flag == 1 || model.flag == 2){
+                                    GameViewSwitch = 1
+                                }
                             }
-                        }
-                        else{
-                            print("Please pick a bid for this round!")
+                            else{
+                                print("Please pick a bid for this round!")
+                            }
+                        } else
+                        {
+                            print("you cannot counter bid on a final offer!")
                         }
                     }
                     .padding()
                     Button("Accept Offer") {
-                        /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Action@*/ /*@END_MENU_TOKEN@*/
+                        model.acceptOffer()
+                        GameViewSwitch = 1
+                    }
+                    .padding()
+                    Button("Decline Offer") {
+                        model.declineOffer()
+                        GameViewSwitch = 1
                     }
                     .padding()
                 }
                 .padding(.horizontal)
                 
                 Button("Quit Round") {
-                    /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Action@*/ /*@END_MENU_TOKEN@*/
+                    GameViewSwitch = 1
+                    model.resetQuit()
                 }
                 .foregroundColor(.red)
                 .padding()
